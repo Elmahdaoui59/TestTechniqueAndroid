@@ -3,4 +3,5 @@
     <string name="no_data">No Data</string>
     <string name="username_preview">username</string>
     <string name="id_preview">Id</string>
+    <string name="user_avatar">user_avatar</string>
 </resources>
