@@ -23,7 +23,7 @@ class UserAdapter(private val onItemClick: (UserItem) -> Unit) : ListAdapter<Use
         holder.binding.apply {
             tvUserId.text = user.id.toString()
             tvUsername.text = user.login
-            //Glide.with(this.root.context).load(user.avatar_url).into(this.ivUserAvatar)
+            Glide.with(this.root.context).load(user.avatar_url).into(this.ivUserAvatar)
         }
         holder.itemView.setOnClickListener {
             onItemClick(user)

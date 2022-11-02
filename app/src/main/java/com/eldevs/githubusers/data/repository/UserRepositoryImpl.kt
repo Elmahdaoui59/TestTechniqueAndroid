@@ -1,27 +1,11 @@
 package com.eldevs.githubusers.data.repository
 
 import com.eldevs.githubusers.data.model.UserItem
+import com.eldevs.githubusers.data.remote.GithubApi
 
-class UserRepositoryImpl: UserRepository {
+class UserRepositoryImpl(private val api: GithubApi): UserRepository {
+
     override suspend fun getUsersList(): List<UserItem> {
-        return listOf(
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url"),
-            UserItem(id = 1, login = "login", avatar_url = "url")
-        )
+        return api.getUsers()
     }
 }

@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         userAdapter = UserAdapter {}
-        refreshData()
 
         binding.usersRv.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -40,7 +39,12 @@ class MainActivity : AppCompatActivity() {
     private fun refreshData() {
         userViewModel.getUserList()
         userAdapter.submitList(userViewModel.users.value)
+        userAdapter.notifyDataSetChanged()
         binding.swipeContainer.isRefreshing = false
     }
 
+    override fun onStart() {
+        super.onStart()
+        refreshData()
+    }
 }
