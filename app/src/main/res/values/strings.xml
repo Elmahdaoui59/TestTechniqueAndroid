@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">GithubUsers</string>
     <string name="no_data">No Data</string>
+    <string name="username_preview">username</string>
+    <string name="id_preview">Id</string>
 </resources>
