@@ -1,5 +1,6 @@
 package com.eldevs.githubusers.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,15 +14,22 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val userRepository: UserRepository
-): ViewModel() {
+) : ViewModel() {
 
-    private val _users = MutableLiveData<List<UserItem>>()
+    private val _users by lazy {
+        MutableLiveData<List<UserItem>>(emptyList())
+    }
     val users: LiveData<List<UserItem>>
         get() = _users
 
+
     fun getUserList() {
         viewModelScope.launch {
-            _users.value = userRepository.getUsersList()
+            try {
+                _users.value = userRepository.getUsersList()
+            } catch (e: Exception) {
+                Log.e("error", e.message.toString())
+            }
         }
     }
 

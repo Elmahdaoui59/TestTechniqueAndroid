@@ -24,12 +24,14 @@ class MainActivity : AppCompatActivity() {
 
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         userAdapter = UserAdapter {}
+        setUpRecyclerView()
 
-        binding.usersRv.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = userAdapter
-            setHasFixedSize(true)
+        userViewModel.users.observe(this) {
+            userAdapter.submitList(it)
+            userAdapter.notifyDataSetChanged()
+
         }
+        refreshData()
 
         binding.swipeContainer.setOnRefreshListener {
             refreshData()
@@ -38,13 +40,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun refreshData() {
         userViewModel.getUserList()
-        userAdapter.submitList(userViewModel.users.value)
-        userAdapter.notifyDataSetChanged()
         binding.swipeContainer.isRefreshing = false
     }
 
-    override fun onStart() {
-        super.onStart()
-        refreshData()
+    private fun setUpRecyclerView() {
+        binding.usersRv.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = userAdapter
+            setHasFixedSize(true)
+        }
     }
+
 }
