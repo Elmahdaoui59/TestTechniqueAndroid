@@ -10,6 +10,6 @@ you can also check these two endpoints :<br />
 https://api.github.com/users?q=2004-07-27 <br />
 https://api.github.com/users?q=2019-07-10
 
-They fetch the same list of users as https://api.github.com/users. __
+They fetch the same list of users as https://api.github.com/users. <br />
 So I haven't seen any reason to include this query.
 
