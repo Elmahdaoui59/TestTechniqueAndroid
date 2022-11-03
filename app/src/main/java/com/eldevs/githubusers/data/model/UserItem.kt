@@ -1,5 +1,7 @@
 package com.eldevs.githubusers.data.model
 
+
+
 data class UserItem(
     val avatar_url: String,
     val events_url: String? = null,
