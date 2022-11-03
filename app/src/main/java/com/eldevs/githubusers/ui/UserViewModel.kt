@@ -16,21 +16,30 @@ class UserViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    private val _users by lazy {
-        MutableLiveData<List<UserItem>>(emptyList())
+    private val _users: MutableLiveData<UsersState> by lazy {
+        MutableLiveData<UsersState>(UsersState())
     }
-    val users: LiveData<List<UserItem>>
+    val users: LiveData<UsersState>
         get() = _users
 
 
     fun getUserList() {
         viewModelScope.launch {
             try {
-                _users.value = userRepository.getUsersList()
+                _users.value =_users.value?.copy(
+                    users = userRepository.getUsersList()
+                )
             } catch (e: Exception) {
-                Log.e("error", e.message.toString())
+                _users.value = _users.value?.copy(
+                    error = e.message.toString()
+                )
             }
         }
+    }
+    fun dismissError() {
+        _users.value = _users.value?.copy(
+            error = null
+        )
     }
 
 }

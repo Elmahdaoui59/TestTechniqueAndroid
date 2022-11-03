@@ -1,14 +1,14 @@
 package com.eldevs.githubusers.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eldevs.githubusers.R
-import com.eldevs.githubusers.data.model.UserItem
+import com.eldevs.githubusers.UserInfoActivity
 import com.eldevs.githubusers.databinding.ActivityMainBinding
-import com.eldevs.githubusers.databinding.ItemUserBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,16 +23,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-        userAdapter = UserAdapter {}
-        setUpRecyclerView()
-
-        userViewModel.users.observe(this) {
-            userAdapter.submitList(it)
-            userAdapter.notifyDataSetChanged()
-
+        userAdapter = UserAdapter {
         }
+        setUpRecyclerView()
+        observeData()
         refreshData()
-
         binding.swipeContainer.setOnRefreshListener {
             refreshData()
         }
@@ -48,6 +43,19 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = userAdapter
             setHasFixedSize(true)
+        }
+    }
+
+    private fun observeData() {
+        userViewModel.users.observe(this) { state ->
+            if (state.users.isNotEmpty()) {
+                userAdapter.submitList(state.users)
+                userAdapter.notifyDataSetChanged()
+            }
+            state.error?.let {
+                Toast.makeText(this, getString(R.string.error_message), Toast.LENGTH_SHORT).show()
+                userViewModel.dismissError()
+            }
         }
     }
 
