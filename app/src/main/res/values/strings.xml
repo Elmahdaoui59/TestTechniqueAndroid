@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Github Users Mvp</string>
+    <string name="no_data">No Data</string>
+    <string name="username_preview">Username : </string>
+    <string name="id_preview">Id</string>
+    <string name="error_message">Unknown error, check your network and try again</string>
+    <string name="user_avatar">user_avatar</string>
+    <string name="name">Name : </string>
+    <string name="followers">Followers : </string>
+    <string name="repos">Repos : </string>
+    <string name="acc_creation_date">Account creation date : </string>
+</resources>
